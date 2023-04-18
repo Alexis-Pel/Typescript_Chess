@@ -1,13 +1,12 @@
-import { Request, Response } from 'express';
-import { login, register } from './user.service';
+import type { Request, Response } from 'express'
+import { login, register } from './user.service'
 
 export function getMe(req: Request, res: Response) {
-
   res.json({ hello: 'World' })
 }
 
 export async function postRegister(req: Request, res: Response) {
-  const { body } = req;
+  const { body } = req
 
   try {
     await register(body)
@@ -16,11 +15,10 @@ export async function postRegister(req: Request, res: Response) {
   catch (err) {
     res.status(400).json({ error: 'cannot create user' })
   }
-
 }
 
 export async function postLogin(req: Request, res: Response) {
-  const { body } = req;
+  const { body } = req
 
   const token = await login(body)
   // do something with token ?

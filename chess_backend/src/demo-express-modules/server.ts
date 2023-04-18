@@ -15,8 +15,8 @@ export function initServer() {
   app.use('/user', userRouter)
 
   app.listen(8080, () => {
-    console.log('Listening on http://localhost:8080');
+    console.log('Listening on http://localhost:8080')
   })
 
-  return app;
+  return app
 }
