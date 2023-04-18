@@ -1,7 +1,7 @@
-import { Router } from 'express';
-import { validateBody } from '../common/validate-body';
-import { validateUserRegister } from './user.validator';
-import { getMe, postLogin, postRegister } from './user.controller';
+import { Router } from 'express'
+import { validateBody } from '../common/validate-body'
+import { validateUserRegister } from './user.validator'
+import { getMe, postLogin, postRegister } from './user.controller'
 
 export const router = Router()
 
@@ -13,5 +13,3 @@ router.post('/register', validateBody(validateUserRegister), postRegister)
 
 // POST /user/login
 router.post('/login', /* add validator login body here , */ postLogin)
-
-

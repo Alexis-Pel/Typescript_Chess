@@ -1,4 +1,3 @@
-
 function loadDb() {
   return import('./demo-express-modules/db').then(({ initMongoDb }) => initMongoDb())
 }
@@ -8,27 +7,24 @@ function loadWebserver() {
 }
 
 function handleError(err: unknown, origin?: NodeJS.UncaughtExceptionOrigin) {
-  if (origin) {
+  if (origin)
     console.error(origin)
-  }
-  if (err instanceof Error) {
+
+  if (err instanceof Error)
     console.error(err.message)
-  } else {
+  else
     console.error(err)
-  }
+
   process.exit(1)
 }
 
 import('dotenv/config').then(
   () => loadDb().then(
-    () => loadWebserver()
-  ).catch(handleError)
+    () => loadWebserver(),
+  ).catch(handleError),
 ).catch(handleError)
 
 process.addListener('uncaughtException', handleError)
-
-
-
 
 // // test user register after one second. This must answer a 400 Bad Request
 // setTimeout(async () => {

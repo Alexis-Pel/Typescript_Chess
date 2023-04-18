@@ -1,32 +1,32 @@
-import { ajv } from '../common/ajv';
-import {JSONSchemaType} from 'ajv'
-import { IUserLoginBody, IUserRegisterBody } from './user.interface';
+import type { JSONSchemaType } from 'ajv'
+import { ajv } from '../common/ajv'
+import type { IUserLoginBody, IUserRegisterBody } from './user.interface'
 
 const userRegisterSchema: JSONSchemaType<IUserRegisterBody> = {
-  type: "object",
+  type: 'object',
   properties: {
-    email: { type: "string", format: "email" },
-    password: { type: "string", minLength: 8 },
-    username: { type: "string", minLength: 4, maxLength: 12 }
+    email: { type: 'string', format: 'email' },
+    password: { type: 'string', minLength: 8 },
+    username: { type: 'string', minLength: 4, maxLength: 12 },
   },
-  required: ["email", "password", "username"],
+  required: ['email', 'password', 'username'],
   additionalProperties: false,
   errorMessage: {
     properties: {
-      email: "email should be a valid email address",
-      password: "password should be 8 characters minimum",
-      username: "username should be between 4 and 12 characters"
-    }
-  }
+      email: 'email should be a valid email address',
+      password: 'password should be 8 characters minimum',
+      username: 'username should be between 4 and 12 characters',
+    },
+  },
 }
 
 const userLoginSchema: JSONSchemaType<IUserLoginBody> = {
-  type: "object",
+  type: 'object',
   properties: {
-    password: { type: "string", minLength: 8 },
-    username: { type: "string", minLength: 4, maxLength: 12 }
+    password: { type: 'string', minLength: 8 },
+    username: { type: 'string', minLength: 4, maxLength: 12 },
   },
-  required: ["password", "username"],
+  required: ['password', 'username'],
   additionalProperties: false,
 }
 

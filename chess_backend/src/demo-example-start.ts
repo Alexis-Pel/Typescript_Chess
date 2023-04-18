@@ -3,12 +3,12 @@ interface IPerson {
   age?: number
 }
 
-type IIDK = {
+interface IIDK {
   name?: string
 }
 
 class Person implements IPerson {
-  name: string = ''
+  name = ''
   age?: number
   constructor() {}
 }

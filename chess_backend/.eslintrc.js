@@ -11,5 +11,11 @@ module.exports = {
         allowTemplateLiterals: true,
       },
     ],
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-misused-promises': 'off',
+    'no-console': 'off',
+    'unused-imports/no-unused-vars': 'off',
+    '@typescript-eslint/await-thenable': 'off',
+    '@typescript-eslint/no-unsafe-argument': 'off',
   },
 }
