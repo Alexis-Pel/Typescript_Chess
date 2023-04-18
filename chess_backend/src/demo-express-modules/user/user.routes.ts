@@ -1,12 +1,12 @@
 import { Router } from 'express'
 import { validateBody } from '../common/validate-body'
 import { validateUserRegister } from './user.validator'
-import { getMe, postLogin, postRegister } from './user.controller'
+import { postLogin, postRegister } from './user.controller'
 
 export const router = Router()
 
 // GET http://localhost:8080/user/me
-router.get('/me', getMe)
+// router.get('/me', getMe)
 
 // POST http://localhost:8080/user/register    data = { username: 'test', password: 'test' }
 router.post('/register', validateBody(validateUserRegister), postRegister)

@@ -17,5 +17,6 @@ module.exports = {
     'unused-imports/no-unused-vars': 'off',
     '@typescript-eslint/await-thenable': 'off',
     '@typescript-eslint/no-unsafe-argument': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
   },
 }
