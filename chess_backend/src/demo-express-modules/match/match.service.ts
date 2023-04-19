@@ -12,6 +12,7 @@ export function getMatch(matchId: string){
   return runGetMatch(new ObjectId(matchId))
 }
 
+/*
 export function getAllMatch(token: string | undefined){
   if(token == undefined){
     return
@@ -22,6 +23,7 @@ export function getAllMatch(token: string | undefined){
   }
   return runGetAllMatch(decode['id'])
 }
+*/
 
 async function runGetAllMatch(id: string){
   const collection = db.collection('matchs')

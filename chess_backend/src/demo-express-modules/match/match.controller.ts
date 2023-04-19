@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express'
-import { createMatch, getMatch, getAllMatch } from './match.service'
+import { createMatch, getMatch } from './match.service'
 
 /* export function getMe(req: Request, res: Response) {
   res.json({ hello: 'World' })
@@ -25,6 +25,7 @@ export async function getMatchById(req: Request, res: Response){
   }
 }
 
+/*
 export async function getAllMatchForUser(req: Request, res: Response){
   const bearer = req.header('Authorization')
   try{
@@ -34,3 +35,4 @@ export async function getAllMatchForUser(req: Request, res: Response){
     res.status(400).json({ error: 'cannot create user' })
   }
 }
+*/
