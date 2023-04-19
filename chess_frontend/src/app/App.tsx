@@ -5,11 +5,13 @@ import Game from './pages/game/Game';
 import Lobby from './pages/lobby/Lobby';
 import Dashboard from './pages/dashboard/Dashboard';
 import './App.css';
+import Register from './pages/register/Register';
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route path="/register" element={<Register />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/game" element={<Game />} />
       <Route path="/Lobby" element={<Lobby />} />
