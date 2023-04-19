@@ -1,24 +1,24 @@
 .main-wrapper {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.login-wrapper{
-    width: 75%;
-    height: 75%;
-    display: flex;
-    justify-content: center;
+.login-wrapper {
+  width: 75%;
+  height: 75%;
+  display: flex;
+  justify-content: center;
 }
 
-.form-wrapper{
-    flex-direction: column;
-    display: flex;
-    justify-content: space-evenly;
+.form-wrapper {
+  flex-direction: column;
+  display: flex;
+  justify-content: space-evenly;
 }
-.inputs{
-    display: flex;
-    flex-direction: column;
+.inputs {
+  display: flex;
+  flex-direction: column;
 }
