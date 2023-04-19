@@ -16,10 +16,9 @@ function Dashboard() {
   const navigate = useNavigate();
   const [friendListData, setFriendListData] = useState<Array<Friend>>([]);
   const [cardData, setCardData] = useState<Array<JSX.Element>>([]);
-  const friendListCardArray: Array<JSX.Element> = [];
 
   async function getFriendData() {
-    // Get friends
+    const friendListCardArray: Array<JSX.Element> = [];
     const testFriendData: Array<Friend> = [
       {
         userName: 'Tristan',
@@ -37,7 +36,7 @@ function Dashboard() {
 
     setFriendListData(testFriendData);
 
-    friendListData.forEach((friend) => {
+    friendListData.forEach((friend, i) => {
       friendListCardArray.push(
         <Box
           sx={{
@@ -46,6 +45,7 @@ function Dashboard() {
             justifyContent: 'space-between',
             alignItems: 'center',
           }}
+          key={i}
         >
           <Typography
             sx={{

@@ -21,9 +21,9 @@ function Lobby() {
   const navigate = useNavigate();
   const [matchData, setMatchData] = useState<Array<Match>>([]);
   const [cardData, setCardData] = useState<Array<JSX.Element>>([]);
-  const availableMatchesArray: Array<JSX.Element> = [];
 
   async function getLobbyData() {
+    const availableMatchesArray: Array<JSX.Element> = [];
     const testMatchesData: Array<Match> = [
       {
         players: [
@@ -53,7 +53,7 @@ function Lobby() {
 
     setMatchData(testMatchesData);
 
-    matchData.forEach((match) => {
+    matchData.forEach((match, i) => {
       availableMatchesArray.push(
         <Box
           sx={{
@@ -62,6 +62,7 @@ function Lobby() {
             justifyContent: 'space-between',
             alignItems: 'center',
           }}
+          key={i}
         >
           <Typography
             sx={{
