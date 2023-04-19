@@ -38,7 +38,7 @@ function Login() {
                   </div>
                   <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                       <Button variant="outlined" onClick={handleSubmit}>Se connecter</Button>
-                      <i style={{fontSize: "10px"}}>Besoin de <a href="#">créer un compte ?</a></i>
+                      <i style={{fontSize: "10px"}}>Besoin de <a href="/register">créer un compte ?</a></i>
                   </div>
               </form>
           </div>
