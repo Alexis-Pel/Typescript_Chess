@@ -1,9 +1,14 @@
 import Box from '@mui/material/Box';
-import "./Dashboard.css";
+import './Dashboard.css';
 
 function Dashboard() {
   return (
-    <Box>
+    <Box
+      sx={{
+        width: '5hv',
+        backgroundColor: '#0a1929',
+      }}
+    >
       hello
     </Box>
   );
