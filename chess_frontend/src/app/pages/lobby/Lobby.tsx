@@ -1,11 +1,88 @@
+import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router';
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
 import './Lobby.css';
 
+interface Player {
+  username: string;
+  email: string;
+  password: string;
+  playerCredit: number;
+}
+interface Match {
+  players: Array<Player>;
+  ended: boolean;
+  matchCredit: number;
+}
+
 function Lobby() {
   const navigate = useNavigate();
+  const [matchData, setMatchData] = useState<Array<Match>>([]);
+  const [cardData, setCardData] = useState<Array<JSX.Element>>([]);
+  const availableMatchesArray: Array<JSX.Element> = [];
+
+  async function getLobbyData() {
+    const testMatchesData: Array<Match> = [
+      {
+        players: [
+          {
+            username: 'angel',
+            email: 'angel@angel.com',
+            password: 'angel',
+            playerCredit: 5000,
+          },
+        ],
+        ended: false,
+        matchCredit: 10000,
+      },
+      {
+        players: [
+          {
+            username: 'alexis',
+            email: 'alexis@alexis.com',
+            password: 'alexis',
+            playerCredit: 5000,
+          },
+        ],
+        ended: false,
+        matchCredit: 10000,
+      },
+    ];
+
+    setMatchData(testMatchesData);
+
+    matchData.forEach((match) => {
+      availableMatchesArray.push(
+        <Box
+          sx={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <Typography
+            sx={{
+              margin: '1vh',
+            }}
+          >
+            {match.players[0].username}
+          </Typography>
+          <Button variant="outlined" onClick={() => navigate('/game')}>
+            Join
+          </Button>
+        </Box>
+      );
+    });
+
+    setCardData(availableMatchesArray);
+  }
+
+  useEffect(() => {
+    getLobbyData();
+  }, []);
 
   return (
     <Box
@@ -40,25 +117,7 @@ function Lobby() {
         >
           Available games
         </Typography>
-        <Box
-          sx={{
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <Typography
-            sx={{
-              margin: '1vh',
-            }}
-          >
-            Game 0001
-          </Typography>
-          <Button variant="outlined" onClick={() => navigate('/game')}>
-            Join
-          </Button>
-        </Box>
+        {cardData}
       </Box>
     </Box>
   );

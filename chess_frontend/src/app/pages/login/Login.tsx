@@ -50,7 +50,13 @@ function Login() {
               type={'password'}
             />
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
             <Button variant="outlined" onClick={handleSubmit}>
               Se connecter
             </Button>

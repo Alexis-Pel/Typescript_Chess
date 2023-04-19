@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -6,8 +7,66 @@ import AddIcon from '@mui/icons-material/Add';
 import { Typography } from '@mui/material';
 import './Dashboard.css';
 
+interface Friend {
+  userName: string;
+  credit: number;
+}
+
 function Dashboard() {
   const navigate = useNavigate();
+  const [friendListData, setFriendListData] = useState<Array<Friend>>([]);
+  const [cardData, setCardData] = useState<Array<JSX.Element>>([]);
+  const friendListCardArray: Array<JSX.Element> = [];
+
+  async function getFriendData() {
+    // Get friends
+    const testFriendData: Array<Friend> = [
+      {
+        userName: 'Tristan',
+        credit: 400,
+      },
+      {
+        userName: 'Angel',
+        credit: 400,
+      },
+      {
+        userName: 'Alexis',
+        credit: 400,
+      },
+    ];
+
+    setFriendListData(testFriendData);
+
+    friendListData.forEach((friend) => {
+      friendListCardArray.push(
+        <Box
+          sx={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <Typography
+            sx={{
+              margin: '1vh',
+            }}
+          >
+            {friend.userName}
+          </Typography>
+          <Button variant="outlined" onClick={() => navigate('/game')}>
+            Invite
+          </Button>
+        </Box>
+      );
+    });
+
+    setCardData(friendListCardArray);
+  }
+
+  useEffect(() => {
+    getFriendData();
+  }, []);
 
   return (
     <Box
@@ -42,25 +101,7 @@ function Dashboard() {
         >
           Friends Online
         </Typography>
-        <Box
-          sx={{
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <Typography
-            sx={{
-              margin: '1vh',
-            }}
-          >
-            Tristan
-          </Typography>
-          <Button variant="outlined" onClick={() => navigate('/game')}>
-            Invite
-          </Button>
-        </Box>
+        {cardData}
         <Box
           sx={{
             marginTop: '3vh',
