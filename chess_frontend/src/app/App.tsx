@@ -9,10 +9,10 @@ import './App.css';
 function App() {
   return (
     <Routes>
-      <Route path='/' element={<Login />}/>
-      <Route path='/dashboard' element={<Dashboard />} />
-      <Route path='/game' element={<Game />}/>
-      <Route path='/Lobby' element={<Lobby />}/>
+      <Route path="/" element={<Login />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/game" element={<Game />} />
+      <Route path="/Lobby" element={<Lobby />} />
     </Routes>
   );
 }
