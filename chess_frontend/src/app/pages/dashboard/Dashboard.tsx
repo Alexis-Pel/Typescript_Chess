@@ -1,15 +1,20 @@
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import './Dashboard.css';
 
 function Dashboard() {
   return (
     <Box
       sx={{
-        width: '5hv',
-        backgroundColor: '#0a1929',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: '5vh',
       }}
     >
-      hello
+      <Box>
+        <Button variant="outlined">Play</Button>
+      </Box>
     </Box>
   );
 }
