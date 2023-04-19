@@ -11,6 +11,7 @@ import {
   DialogTitle,
 } from '@mui/material';
 import { logIn } from '../../services/login-service';
+//import { sendEmailRecoverPassword } from '../../services/mail-service';
 
 function Login() {
   const [usernameValue, setUsernameValue] = useState('');
@@ -26,8 +27,9 @@ function Login() {
     setOpen(false);
   }
   function handleCloseSend() {
-    setOpen(false);
     // Send Email
+    //sendEmailRecoverPassword(emailRecoverValue);
+    handleClose();
   }
   function handleUsernameChange(event: any) {
     setUsernameValue(event.target.value);
