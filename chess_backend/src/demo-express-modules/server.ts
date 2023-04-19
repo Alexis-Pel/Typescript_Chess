@@ -1,5 +1,6 @@
 import express from 'express'
 import { router as userRouter } from './user/user.routes'
+import { router as matchRouter } from './match/match.routes'
 
 export function initServer() {
   const app = express()
@@ -16,6 +17,8 @@ export function initServer() {
 
   // app.use('/blog', routerBlog)
   app.use('/user', userRouter)
+  app.use('/match', matchRouter)
+
 
   app.listen(8080, () => {
     console.log('Listening on http://localhost:8080')
