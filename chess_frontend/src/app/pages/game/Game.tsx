@@ -41,7 +41,7 @@ function Game() {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', alignItems: 'center' }}>
       <Chessboard
         id="StyledBoard"
         boardOrientation="black"
