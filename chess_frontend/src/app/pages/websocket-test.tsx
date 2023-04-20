@@ -48,7 +48,7 @@ function Websocket() {
         backgroundColor: 'white',
         width: '50%',
         height: '100%',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
       }}
     >
       <div>
