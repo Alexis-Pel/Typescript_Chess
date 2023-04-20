@@ -15,11 +15,11 @@ function Login() {
   }
 
   function handleSubmit() {
-    logIn(usernameValue, passwordValue).then((r) => {
+    logIn(usernameValue, passwordValue).then((r: any) => {
       if (!r) {
         alert("Nom d'utilisateur ou mot de passe incorrect");
       } else {
-        // Go To Dashboard
+        localStorage.setItem('token', r['message']);
       }
     });
   }
