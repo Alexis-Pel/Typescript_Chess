@@ -1,11 +1,30 @@
 import { sign } from 'jsonwebtoken'
 import { db } from '../db'
 import type { IUserLoginBody, IUserRegisterBody } from './user.interface'
+// @ts-ignore
+import {checkToken} from "../token";
+import {ObjectId} from "mongodb";
 
 export async function login(userData: IUserLoginBody) {
   return await runLogin(userData)
 }
 
+export async function getMeService(token: string | undefined){
+  if (token == undefined){
+    return { status: 500, message: 'Authentification required' }
+  }
+  const decodedToken = checkToken(token)
+  if (decodedToken) {
+    try{
+      const collection = db.collection('users')
+      const user = await collection.findOne({ _id: new ObjectId(decodedToken['id']) })
+      return { status: 200, message: user }
+    }catch (e){
+     console.log(e)
+    }
+  }
+  return { status: 500, message: 'Error happened' }
+}
 export function register(userData: IUserRegisterBody) {
   // do something to register the user
   void runRegister(userData).then()

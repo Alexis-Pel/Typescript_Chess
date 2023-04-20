@@ -4,6 +4,7 @@ import Login from './pages/login/Login';
 import Game from './pages/game/Game';
 import Lobby from './pages/lobby/Lobby';
 import Dashboard from './pages/dashboard/Dashboard';
+import Websocket from './pages/websocket-test';
 import './App.css';
 import Register from './pages/register/Register';
 
@@ -15,6 +16,7 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/game" element={<Game />} />
       <Route path="/Lobby" element={<Lobby />} />
+      <Route path="/test" element={<Websocket />} />
     </Routes>
   );
 }

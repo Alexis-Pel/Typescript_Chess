@@ -1,9 +1,14 @@
 import type { Request, Response } from 'express'
-import { login, register } from './user.service'
+import { login, register, getMeService } from './user.service'
+// @ts-ignore
+import {checkToken} from "../token";
 
-/* export function getMe(req: Request, res: Response) {
-  res.json({ hello: 'World' })
-} */
+export async function getMe(req: Request, res: Response) {
+  const token = req.header('Authorization')
+  const response = await getMeService(token)
+  console.log(response)
+  res.status(response['status']).json(response)
+}
 
 export async function postRegister(req: Request, res: Response) {
   const { body } = req
