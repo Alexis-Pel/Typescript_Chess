@@ -1,9 +1,11 @@
 import './Login.css';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 import { TextField, Button } from '@mui/material';
 import { logIn } from '../../services/login-service';
 
 function Login() {
+  const navigate = useNavigate();
   const [usernameValue, setUsernameValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
 
@@ -20,6 +22,7 @@ function Login() {
         alert("Nom d'utilisateur ou mot de passe incorrect");
       } else {
         localStorage.setItem('token', r['message']);
+        navigate('/dashboard');
       }
     });
   }
