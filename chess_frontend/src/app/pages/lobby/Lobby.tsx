@@ -61,6 +61,10 @@ function Lobby() {
     getLobbyData();
   }, []);
 
+  async function createNewGame() {
+    navigate('/game');
+  }
+
   return (
     <Box
       sx={{
@@ -95,6 +99,15 @@ function Lobby() {
           Available games
         </Typography>
         {cardData}
+        <Button
+          sx={{
+            marginTop: '4vh',
+          }}
+          variant="outlined"
+          onClick={() => createNewGame()}
+        >
+          Create new game
+        </Button>
       </Box>
     </Box>
   );

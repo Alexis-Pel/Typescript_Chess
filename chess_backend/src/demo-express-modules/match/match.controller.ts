@@ -1,27 +1,37 @@
-import type { Request, Response } from 'express'
-import { createMatch, getMatch } from './match.service'
+import type { Request, Response } from "express";
+import { createMatch, getMatch, getAllMatches } from "./match.service";
 
 /* export function getMe(req: Request, res: Response) {
   res.json({ hello: 'World' })
 } */
 
 export async function postRegister(req: Request, res: Response) {
-  const { body } = req
+  const { body } = req;
   try {
-    await createMatch(body)
-    res.json({ success: true })
-  }
-  catch (err) {
-    res.status(400).json({ error: 'cannot create user' })
+    await createMatch(body);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(400).json({ error: "cannot create user" });
   }
 }
 
-export async function getMatchById(req: Request, res: Response){
-  try{
-    return await getMatch(req.params.toDoId)
+export async function getMatchById(req: Request, res: Response) {
+  try {
+    return await getMatch(req.params.toDoId);
+  } catch (err) {
+    res.status(400).json({ error: "cannot create user" });
   }
-  catch (err){
-    res.status(400).json({ error: 'cannot create user' })
+}
+
+export async function getMatches(req: Request, res: Response) {
+  try {
+    const availableMatches = await getAllMatches();
+
+    return res.json({
+      matches: availableMatches,
+    });
+  } catch (err) {
+    res.status(400).json({ error: "cannot create user" });
   }
 }
 
