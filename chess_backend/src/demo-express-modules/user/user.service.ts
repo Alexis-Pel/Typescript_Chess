@@ -1,9 +1,18 @@
 import { sign } from "jsonwebtoken";
 import { db } from "../db";
-import type { IUserLoginBody, IUserRegisterBody } from "./user.interface";
+import type {
+  IUserLoginBody,
+  IUserRegisterBody,
+  IUFriend,
+} from "./user.interface";
 // @ts-ignore
 import { checkToken } from "../token";
-import { ObjectId } from "mongodb";
+import { Condition, ObjectId } from "mongodb";
+
+interface NewFriend {
+  id: Condition<ObjectId> | undefined;
+  username: string;
+}
 
 export async function login(userData: IUserLoginBody) {
   return await runLogin(userData);
@@ -68,6 +77,27 @@ async function runRegister(newUser: IUserRegisterBody) {
     return {
       status: 500,
       message: "Nom d'utilisateur ou mot de passe incorrect",
+    };
+  }
+}
+
+export async function addFriendToUser(newFriendData: NewFriend) {
+  const collection = db.collection("users");
+  try {
+    // Enregistrer le nouvel utilisateur dans la collection "users"
+    const lol = await collection.updateOne(
+      { _id: newFriendData.id },
+      { $set: { username: newFriendData.username } }
+    );
+
+    console.log(lol);
+
+    return { status: 201, message: "Ami ajouté avec succès" };
+  } catch (e) {
+    console.log(e);
+    return {
+      status: 500,
+      message: "Friends non mis à jour",
     };
   }
 }
