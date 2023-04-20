@@ -1,25 +1,41 @@
 import './Game.css';
 import { Chessboard } from 'react-chessboard';
 import { useState } from 'react';
-import { Square } from 'react-chessboard/dist/chessboard/types';
+import { Square, Piece } from 'react-chessboard/dist/chessboard/types';
 import axios from 'axios';
 
 function Game() {
   const [game, setGame] = useState();
 
-  const handleSubmit = async () => {
-    try {
-      const response = await axios.post('http://localhost:8080/games');
-      console.log(response.data); // Afficher la réponse du serveur
-      setGame(response.data.fen);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  if (game == undefined) {
+    const handleSubmit = async () => {
+      try {
+        const response = await axios.post('http://localhost:3000/game/games');
+        console.log(response.data); // Afficher la réponse du serveur
+        return response.data.fen;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    handleSubmit().then((r) => setGame(r));
+  }
 
-  function onDrop(sourceSquare: Square, targetSquare: Square) {
-    console.log(sourceSquare);
-    console.log(targetSquare);
+  function onDrop(sourceSquare: Square, targetSquare: Square, piece: Piece) {
+    const handleSubmit = async () => {
+      const object = {
+        fen: game,
+        move: { from: sourceSquare, to: targetSquare, piece: piece },
+      };
+      try {
+        console.log(object);
+        const response = await axios.post('http://localhost:3000/game/moves', object);
+        console.log(response.data); // Afficher la réponse du serveur
+        return response.data.fen;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    handleSubmit().then((r) => setGame(r));
     return true;
   }
 

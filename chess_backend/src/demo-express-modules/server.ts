@@ -3,6 +3,7 @@ import { Server } from "socket.io";
 import http from "http";
 import { router as userRouter } from './user/user.routes'
 import { router as matchRouter } from './match/match.routes'
+import { router as gameRouter } from './chess/chess'
 // @ts-ignore
 //import { checkToken } from "./token";
 
@@ -35,6 +36,7 @@ export function initServer() {
   // app.use('/blog', routerBlog)
   app.use('/user', userRouter)
   app.use('/match', matchRouter)
+  app.use('/game', gameRouter)
 
 
   const server = http.createServer(app);
