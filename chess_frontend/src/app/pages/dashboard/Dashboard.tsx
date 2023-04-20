@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import { Typography } from '@mui/material';
+import { getFriends } from '../../services/friend-service';
 import './Dashboard.css';
 
 interface Friend {
@@ -14,27 +15,14 @@ interface Friend {
 
 function Dashboard() {
   const navigate = useNavigate();
-  const [friendListData, setFriendListData] = useState<Array<Friend>>([]);
   const [cardData, setCardData] = useState<Array<JSX.Element>>([]);
 
   async function getFriendData() {
     const friendListCardArray: Array<JSX.Element> = [];
-    const testFriendData: Array<Friend> = [
-      {
-        userName: 'Tristan',
-        credit: 400,
-      },
-      {
-        userName: 'Angel',
-        credit: 400,
-      },
-      {
-        userName: 'Alexis',
-        credit: 400,
-      },
-    ];
+    let friendListData: Array<Friend> = [];
 
-    setFriendListData(testFriendData);
+    const fakeApiResponse = await getFriends();
+    friendListData = fakeApiResponse;
 
     friendListData.forEach((friend, i) => {
       friendListCardArray.push(

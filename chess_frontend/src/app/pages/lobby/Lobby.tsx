@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router';
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
+import { getMatches } from '../../services/match-service';
 import './Lobby.css';
 
 interface Player {
@@ -19,41 +20,16 @@ interface Match {
 
 function Lobby() {
   const navigate = useNavigate();
-  const [matchData, setMatchData] = useState<Array<Match>>([]);
   const [cardData, setCardData] = useState<Array<JSX.Element>>([]);
 
   async function getLobbyData() {
     const availableMatchesArray: Array<JSX.Element> = [];
-    const testMatchesData: Array<Match> = [
-      {
-        players: [
-          {
-            username: 'angel',
-            email: 'angel@angel.com',
-            password: 'angel',
-            playerCredit: 5000,
-          },
-        ],
-        ended: false,
-        matchCredit: 10000,
-      },
-      {
-        players: [
-          {
-            username: 'alexis',
-            email: 'alexis@alexis.com',
-            password: 'alexis',
-            playerCredit: 5000,
-          },
-        ],
-        ended: false,
-        matchCredit: 10000,
-      },
-    ];
+    let matchListData: Array<Match> = [];
 
-    setMatchData(testMatchesData);
+    const fakeApiResponse = await getMatches();
+    matchListData = fakeApiResponse;
 
-    matchData.forEach((match, i) => {
+    matchListData.forEach((match, i) => {
       availableMatchesArray.push(
         <Box
           sx={{
