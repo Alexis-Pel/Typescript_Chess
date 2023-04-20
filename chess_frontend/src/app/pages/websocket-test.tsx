@@ -41,9 +41,18 @@ function Websocket() {
   });
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundColor: 'white',
+        width: '50%',
+        height: '100%',
+        justifyContent: 'space-between'
+      }}
+    >
       <div>
-        <ul>
+        <ul style={{ backgroundColor: 'black' }}>
           {messagesValue.map((item, index) => (index === 0 ? null : <div key={index}>{item}</div>))}
         </ul>
       </div>

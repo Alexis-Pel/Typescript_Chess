@@ -3,6 +3,7 @@ import { Chessboard } from 'react-chessboard';
 import { useState } from 'react';
 import { Square, Piece } from 'react-chessboard/dist/chessboard/types';
 import axios from 'axios';
+import Websocket from '../websocket-test';
 
 function Game() {
   const [game, setGame] = useState();
@@ -40,7 +41,7 @@ function Game() {
   }
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <Chessboard
         id="StyledBoard"
         boardOrientation="black"
@@ -50,6 +51,7 @@ function Game() {
         customDarkSquareStyle={{ backgroundColor: '#779952' }}
         customLightSquareStyle={{ backgroundColor: '#edeed1' }}
       />
+      <Websocket />
     </div>
   );
 }

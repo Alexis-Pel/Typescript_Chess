@@ -36,6 +36,7 @@ async function runLogin(userData: IUserLoginBody): Promise<object> {
     const user = await collection.findOne({ username: userData.username })
     // Verifier le mot de passe de l'utilisateur
     const passwordMatch = userData.password === user!.password
+    console.log(user)
     if (!passwordMatch)
       // eslint-disable-next-line unicorn/error-message
       throw new Error()
