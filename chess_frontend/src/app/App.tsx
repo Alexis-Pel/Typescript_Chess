@@ -5,8 +5,8 @@ import Game from './pages/game/Game';
 import Lobby from './pages/lobby/Lobby';
 import Dashboard from './pages/dashboard/Dashboard';
 import Websocket from './pages/websocket-test';
-import './App.css';
 import Register from './pages/register/Register';
+import './App.css';
 
 function App() {
   return (
