@@ -6,6 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import { Typography } from '@mui/material';
 import { getFriends } from '../../services/friend-service';
+import chess2 from '../../assets/chess2.png';
 import './Dashboard.css';
 
 interface Friend {
@@ -62,7 +63,7 @@ function Dashboard() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: '5vh',
+        marginTop: '10vh',
       }}
     >
       <Box
@@ -73,7 +74,7 @@ function Dashboard() {
           justifyContent: 'flex-start',
           alignItems: 'center',
           flexDirection: 'column',
-          marginTop: '4vh',
+          marginTop: '1vh',
           padding: '3vh',
           border: 'solid',
           borderColor: '#2f86d7',
@@ -101,19 +102,33 @@ function Dashboard() {
         </Box>
       </Box>
       <Box
+        component="img"
         sx={{
+          width: '35vh',
+          height: '40vh',
+          borderRadius: '1vh',
+          margin: '2vh',
+        }}
+        alt="Fantasy chess player"
+        src={chess2}
+      />
+      <Box
+        sx={{
+          minWidth: '35vh',
+          minHeight: '55vh',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          flexDirection: 'row',
-          margin: '2vh',
+          flexDirection: 'column',
+          marginTop: '1vh',
+          padding: '3vh',
+          border: 'solid',
+          borderColor: '#2f86d7',
+          borderWidth: '0.2vh',
+          borderRadius: '1vh',
         }}
       >
-        <Box
-          sx={{
-            margin: '1vh',
-          }}
-        >
+        <Box>
           <Button variant="outlined" onClick={() => navigate('/lobby')}>
             Join game
           </Button>
