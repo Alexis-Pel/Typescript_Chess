@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router';
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
-import { getMatches } from '../../services/match-service';
+import { getMatches, createNewMatch } from '../../services/match-service';
 import './Lobby.css';
 
 interface Player {
@@ -18,6 +18,17 @@ interface Match {
   matchCredit: number;
 }
 
+interface NewMatch {
+  players: [
+    {
+      username: string;
+    }
+  ];
+  credits: 9000;
+  ended: false;
+  private: false;
+}
+
 function Lobby() {
   const navigate = useNavigate();
   const [cardData, setCardData] = useState<Array<JSX.Element>>([]);
@@ -26,8 +37,9 @@ function Lobby() {
     const availableMatchesArray: Array<JSX.Element> = [];
     let matchListData: Array<Match> = [];
 
-    const fakeApiResponse = await getMatches();
-    matchListData = fakeApiResponse;
+    const availableMatches = await getMatches();
+
+    matchListData = availableMatches;
 
     matchListData.forEach((match, i) => {
       availableMatchesArray.push(
@@ -62,6 +74,19 @@ function Lobby() {
   }, []);
 
   async function createNewGame() {
+    const newMatchData: NewMatch = {
+      players: [
+        {
+          username: 'alexis',
+        },
+      ],
+      credits: 9000,
+      ended: false,
+      private: false,
+    };
+
+    const newGame = await createNewMatch(newMatchData);
+    console.log(newGame);
     navigate('/game');
   }
 

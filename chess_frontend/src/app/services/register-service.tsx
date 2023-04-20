@@ -14,7 +14,7 @@ export function register(username: string, password: string, email: string) {
 async function runRegister(data: object) {
   let toReturn = {};
   await axios
-    .post('http://localhost:8080/user/register', data, {
+    .post('http://localhost:3000/user/register', data, {
       headers: {
         'Content-Type': 'application/json',
       },

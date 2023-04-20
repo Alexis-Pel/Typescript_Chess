@@ -13,7 +13,7 @@ export function logIn(username: string, password: string) {
 async function runLogin(data: object) {
   let toReturn = {};
   await axios
-    .post('http://localhost:8080/user/login', data, {
+    .post('http://localhost:3000/user/login', data, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -24,6 +24,5 @@ async function runLogin(data: object) {
     .catch((error) => {
       toReturn = false;
     });
-  console.clear();
   return toReturn;
 }

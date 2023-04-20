@@ -11,59 +11,39 @@ interface Match {
   players: Array<Player>;
   ended: boolean;
   matchCredit: number;
+  private: boolean;
 }
 
 export async function getMatches() {
-  //send api request
-  //   const data = {
-  //     players: players,
-  //     ended: ended,
-  //   };
+  let toReturn: Array<Match> = [];
+  await axios
+    .get('http://localhost:3000/match')
+    .then((response) => {
+      toReturn = response.data.matches.matches;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
-  const testMatchesData: Array<Match> = [
-    {
-      players: [
-        {
-          username: 'angel',
-          email: 'angel@angel.com',
-          password: 'angel',
-          playerCredit: 5000,
-        },
-      ],
-      ended: false,
-      matchCredit: 10000,
-    },
-    {
-      players: [
-        {
-          username: 'alexis',
-          email: 'alexis@alexis.com',
-          password: 'alexis',
-          playerCredit: 5000,
-        },
-      ],
-      ended: false,
-      matchCredit: 10000,
-    },
-  ];
-
-  //   return runCreateMatch(data);
-  return testMatchesData;
+  return toReturn;
 }
 
-async function runCreateMatch(data: object) {
+export async function createNewMatch(data: object) {
+  console.log({ data });
+
   let toReturn = {};
   await axios
-    .post('http://localhost:8080/match/create', data, {
+    .post('http://localhost:3000/match', data, {
       headers: {
         'Content-Type': 'application/json',
       },
     })
     .then((response) => {
+      console.log(response.data);
       toReturn = response.data;
     })
     .catch((error) => {
-      toReturn = false;
+      console.log(error);
     });
 
   return toReturn;
