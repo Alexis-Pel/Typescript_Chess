@@ -26,10 +26,11 @@ export async function getFriends() {
   return testFriendData;
 }
 
-export async function addFriendToUser(userId: string) {
+export async function addFriendToUser(userToken: object) {
   let toReturn = {};
+
   await axios
-    .post('http://localhost:8080/match/create', userId, {
+    .post('http://localhost:3000/user/friend', userToken, {
       headers: {
         'Content-Type': 'application/json',
       },

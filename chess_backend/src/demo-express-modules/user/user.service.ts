@@ -1,4 +1,4 @@
-import { sign } from "jsonwebtoken";
+import { JwtPayload, sign } from "jsonwebtoken";
 import { db } from "../db";
 import type {
   IUserLoginBody,
@@ -8,10 +8,18 @@ import type {
 // @ts-ignore
 import { checkToken } from "../token";
 import { Condition, ObjectId } from "mongodb";
+const jwt = require("jsonwebtoken");
 
-interface NewFriend {
-  id: Condition<ObjectId> | undefined;
+interface NewUserWithFriends {
+  friends: Array<string>;
   username: string;
+  email: string;
+  password: string;
+}
+
+interface NewFriendData {
+  newFriend: string;
+  token: string;
 }
 
 export async function login(userData: IUserLoginBody) {
@@ -38,7 +46,14 @@ export async function getMeService(token: string | undefined) {
 }
 export function register(userData: IUserRegisterBody) {
   // do something to register the user
-  void runRegister(userData).then();
+  const newUser: NewUserWithFriends = {
+    friends: [],
+    username: userData.username,
+    email: userData.email,
+    password: userData.password,
+  };
+
+  void runRegister(newUser).then();
 }
 
 async function runLogin(userData: IUserLoginBody): Promise<object> {
@@ -81,16 +96,22 @@ async function runRegister(newUser: IUserRegisterBody) {
   }
 }
 
-export async function addFriendToUser(newFriendData: NewFriend) {
+export async function addFriendToUser(newFriendData: NewFriendData) {
   const collection = db.collection("users");
+  console.log(newFriendData);
+
+  const currentUserIdFromToken: JwtPayload = jwt.verify(
+    newFriendData.token,
+    process.env.SECRET
+  );
+
   try {
-    // Enregistrer le nouvel utilisateur dans la collection "users"
-    const lol = await collection.updateOne(
-      { _id: newFriendData.id },
-      { $set: { username: newFriendData.username } }
+    const response = await collection.updateOne(
+      { _id: new ObjectId(currentUserIdFromToken.id) },
+      { $push: { friends: { username: newFriendData.newFriend } } }
     );
 
-    console.log(lol);
+    console.log(response);
 
     return { status: 201, message: "Ami ajouté avec succès" };
   } catch (e) {

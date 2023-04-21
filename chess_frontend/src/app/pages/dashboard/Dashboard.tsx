@@ -8,7 +8,7 @@ import { Typography } from '@mui/material';
 import { getFriends } from '../../services/friend-service';
 import chess2 from '../../assets/chess2.png';
 import { addFriendToUser } from '../../services/friend-service';
-import jwt from 'jwt-decode';
+import TextField from '@mui/material/TextField';
 import './Dashboard.css';
 
 interface Friend {
@@ -19,6 +19,7 @@ interface Friend {
 function Dashboard() {
   const navigate = useNavigate();
   const [cardData, setCardData] = useState<Array<JSX.Element>>([]);
+  const [newFriendName, setNewFriendName] = useState<string>('');
 
   async function joinFriendGame() {
     // Join friend's game
@@ -65,10 +66,19 @@ function Dashboard() {
 
   async function addFrindToUser() {
     const userJWTToken: string | null = localStorage.getItem('token');
+
     if (userJWTToken != null) {
-      const user: string = jwt(userJWTToken);
-      const apiCall = await addFriendToUser(user);
+      const newFriendData: object = {
+        newFriend: newFriendName,
+        token: userJWTToken,
+      };
+      const newFriendAdded = await addFriendToUser(newFriendData);
+      console.log(newFriendAdded);
     }
+  }
+
+  function newFriendNameHandler(data: string) {
+    setNewFriendName(data);
   }
 
   return (
@@ -110,11 +120,17 @@ function Dashboard() {
             marginTop: '3vh',
           }}
         >
-          <IconButton
-            color="success"
-            aria-label="add to shopping cart"
-            onClick={() => addFrindToUser()}
-          >
+          <Box>
+            <Typography
+              sx={{
+                marginTop: '4vh',
+              }}
+            >
+              Add friend
+            </Typography>
+            <TextField variant="outlined" onChange={(e) => newFriendNameHandler(e.target.value)} />
+          </Box>
+          <IconButton color="success" onClick={() => addFrindToUser()}>
             <AddIcon />
           </IconButton>
         </Box>
