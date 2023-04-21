@@ -1,7 +1,13 @@
 import { Router } from "express";
 import { validateBody } from "../common/validate-body";
 import { validateUserRegister } from "./user.validator";
-import { postLogin, postRegister, getMe, addFriend } from "./user.controller";
+import {
+  postLogin,
+  postRegister,
+  getMe,
+  addFriend,
+  getAllFriends,
+} from "./user.controller";
 
 export const router = Router();
 
@@ -15,3 +21,5 @@ router.post("/register", validateBody(validateUserRegister), postRegister);
 router.post("/login", /* add validator login body here , */ postLogin);
 
 router.post("/friend", addFriend);
+
+router.post("/friend/getall", getAllFriends);

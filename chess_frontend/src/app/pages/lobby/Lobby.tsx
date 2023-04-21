@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
 import { getMatches, createNewMatch } from '../../services/match-service';

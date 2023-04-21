@@ -1,5 +1,11 @@
 import type { Request, Response } from "express";
-import { login, register, getMeService, addFriendToUser } from "./user.service";
+import {
+  login,
+  register,
+  getMeService,
+  addFriendToUser,
+  getUserFriends,
+} from "./user.service";
 // @ts-ignore
 import { checkToken } from "../token";
 
@@ -36,4 +42,18 @@ export async function addFriend(req: Request, res: Response) {
   const response = await addFriendToUser(body);
   // do something with token ?
   res.status(response.status).json(response);
+}
+
+export async function getAllFriends(req: Request, res: Response) {
+  const { body } = req;
+
+  try {
+    const availableFriends = await getUserFriends(body);
+
+    return res.json({
+      friends: availableFriends,
+    });
+  } catch (err) {
+    res.status(400).json({ error: "get all friends" });
+  }
 }

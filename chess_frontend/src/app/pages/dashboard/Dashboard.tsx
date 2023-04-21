@@ -12,7 +12,7 @@ import TextField from '@mui/material/TextField';
 import './Dashboard.css';
 
 interface Friend {
-  userName: string;
+  username: string;
   credit: number;
 }
 
@@ -28,9 +28,15 @@ function Dashboard() {
   async function getFriendData() {
     const friendListCardArray: Array<JSX.Element> = [];
     let friendListData: Array<Friend> = [];
+    const userJWTToken: string | null = localStorage.getItem('token');
 
-    const fakeApiResponse = await getFriends();
-    friendListData = fakeApiResponse;
+    if (userJWTToken != null) {
+      const currentUserToken: object = {
+        token: userJWTToken,
+      };
+
+      friendListData = await getFriends(currentUserToken);
+    }
 
     friendListData.forEach((friend, i) => {
       friendListCardArray.push(
@@ -48,7 +54,7 @@ function Dashboard() {
               margin: '1vh',
             }}
           >
-            {friend.userName}
+            {friend.username}
           </Typography>
           <Button variant="outlined" onClick={() => joinFriendGame()}>
             Invite
@@ -72,8 +78,7 @@ function Dashboard() {
         newFriend: newFriendName,
         token: userJWTToken,
       };
-      const newFriendAdded = await addFriendToUser(newFriendData);
-      console.log(newFriendAdded);
+      await addFriendToUser(newFriendData);
     }
   }
 

@@ -10,7 +10,7 @@ import { checkToken } from "../token";
 import { Condition, ObjectId } from "mongodb";
 const jwt = require("jsonwebtoken");
 
-interface NewUserWithFriends {
+interface UserWithFriends {
   friends: Array<string>;
   username: string;
   email: string;
@@ -19,6 +19,10 @@ interface NewUserWithFriends {
 
 interface NewFriendData {
   newFriend: string;
+  token: string;
+}
+
+interface UserToken {
   token: string;
 }
 
@@ -46,7 +50,7 @@ export async function getMeService(token: string | undefined) {
 }
 export function register(userData: IUserRegisterBody) {
   // do something to register the user
-  const newUser: NewUserWithFriends = {
+  const newUser: UserWithFriends = {
     friends: [],
     username: userData.username,
     email: userData.email,
@@ -98,8 +102,6 @@ async function runRegister(newUser: IUserRegisterBody) {
 
 export async function addFriendToUser(newFriendData: NewFriendData) {
   const collection = db.collection("users");
-  console.log(newFriendData);
-
   const currentUserIdFromToken: JwtPayload = jwt.verify(
     newFriendData.token,
     process.env.SECRET
@@ -111,8 +113,6 @@ export async function addFriendToUser(newFriendData: NewFriendData) {
       { $push: { friends: { username: newFriendData.newFriend } } }
     );
 
-    console.log(response);
-
     return { status: 201, message: "Ami ajouté avec succès" };
   } catch (e) {
     console.log(e);
@@ -120,5 +120,25 @@ export async function addFriendToUser(newFriendData: NewFriendData) {
       status: 500,
       message: "Friends non mis à jour",
     };
+  }
+}
+
+export async function getUserFriends(userToken: UserToken) {
+  const collection = db.collection("users");
+
+  const currentUserFromToken: JwtPayload = jwt.verify(
+    userToken.token,
+    process.env.SECRET
+  );
+
+  try {
+    const user = await collection.findOne({
+      _id: new ObjectId(currentUserFromToken.id),
+    });
+
+    return { status: 201, userFriends: user!.friends };
+  } catch (e) {
+    console.log(e);
+    return { status: 500, message: "Matches non trouvés" };
   }
 }
