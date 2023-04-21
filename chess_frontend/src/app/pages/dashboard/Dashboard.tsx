@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import { Typography } from '@mui/material';
 import { getFriends } from '../../services/friend-service';
-import chess2 from '../../assets/chess2.png';
+import chess1 from '../../assets/chess1.png';
 import { addFriendToUser } from '../../services/friend-service';
 import TextField from '@mui/material/TextField';
 import './Dashboard.css';
@@ -21,8 +21,9 @@ function Dashboard() {
   const [cardData, setCardData] = useState<Array<JSX.Element>>([]);
   const [newFriendName, setNewFriendName] = useState<string>('');
 
-  async function joinFriendGame() {
-    // Join friend's game
+  async function joinFriendGame(friendName: string) {
+    // Create match with friend username
+    console.log(friendName);
   }
 
   async function getFriendData() {
@@ -56,7 +57,7 @@ function Dashboard() {
           >
             {friend.username}
           </Typography>
-          <Button variant="outlined" onClick={() => joinFriendGame()}>
+          <Button variant="outlined" onClick={() => joinFriendGame(friend.username)}>
             Invite
           </Button>
         </Box>
@@ -106,7 +107,7 @@ function Dashboard() {
       <Box
         sx={{
           display: 'flex',
-          justifyContent: 'center',
+          justifyContent: 'space-around',
           alignItems: 'center',
           marginTop: '10vh',
         }}
@@ -120,6 +121,7 @@ function Dashboard() {
             alignItems: 'center',
             flexDirection: 'column',
             marginTop: '1vh',
+            marginBottom: '5vh',
             padding: '3vh',
             border: 'solid',
             borderColor: '#2f86d7',
@@ -160,17 +162,6 @@ function Dashboard() {
           </Box>
         </Box>
         <Box
-          component="img"
-          sx={{
-            width: '35vh',
-            height: '40vh',
-            borderRadius: '1vh',
-            margin: '2vh',
-          }}
-          alt="Fantasy chess player"
-          src={chess2}
-        />
-        <Box
           sx={{
             minWidth: '35vh',
             minHeight: '55vh',
@@ -186,6 +177,17 @@ function Dashboard() {
             borderRadius: '1vh',
           }}
         >
+          <Box
+            component="img"
+            sx={{
+              width: '25vh',
+              height: '30vh',
+              borderRadius: '1vh',
+              margin: '2vh',
+            }}
+            alt="Fantasy chess player"
+            src={chess1}
+          />
           <Box>
             <Button variant="outlined" onClick={() => navigate('/lobby')}>
               Join game
