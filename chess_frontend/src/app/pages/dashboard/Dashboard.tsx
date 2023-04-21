@@ -140,22 +140,27 @@ function Dashboard() {
           {cardData}
           <Box
             sx={{
-              marginTop: '3vh',
+              display: 'flex',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              flexDirection: 'column',
+              marginTop: '5vh',
             }}
           >
-            <Box>
-              <Typography
-                sx={{
-                  marginTop: '4vh',
-                }}
-              >
-                Add friend
-              </Typography>
-              <TextField
-                variant="outlined"
-                onChange={(e) => newFriendNameHandler(e.target.value)}
-              />
-            </Box>
+            <Typography
+              sx={{
+                marginTop: '4vh',
+              }}
+            >
+              Add friend
+            </Typography>
+            <TextField
+              sx={{
+                marginTop: '1vh',
+              }}
+              variant="outlined"
+              onChange={(e) => newFriendNameHandler(e.target.value)}
+            />
             <IconButton color="success" onClick={() => addFrindToUser()}>
               <AddIcon />
             </IconButton>

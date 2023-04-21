@@ -91,71 +91,61 @@ function Register() {
           alt="Fantasy chess player"
           src={chess3}
         />
-        <div className="main-wrapper">
-          <div className="login-wrapper">
-            <form className="form-wrapper">
-              <div className="inputs">
-                <TextField
-                  id="outlined-basic"
-                  error={!isValid}
-                  label="Email"
-                  variant="outlined"
-                  size="small"
-                  type={'email'}
-                  style={{ marginBottom: '1em' }}
-                  value={emailValue}
-                  onChange={handleEmailChange}
-                  helperText={isValid ? '' : 'invalid email'}
-                />
-                <TextField
-                  id="outlined-basic"
-                  label="Username"
-                  variant="outlined"
-                  size="small"
-                  style={{ marginBottom: '1em' }}
-                  value={usernameValue}
-                  onChange={handleUsernameChange}
-                />
-                <TextField
-                  id="outlined-basic"
-                  error={!isPasswordValid}
-                  label="Password"
-                  variant="outlined"
-                  size="small"
-                  value={passwordValue}
-                  onChange={handlePasswordChange}
-                  type={'password'}
-                />
-                <TextField
-                  sx={{
-                    marginTop: '2vh',
-                  }}
-                  id="outlined-basic"
-                  error={!isPasswordValid}
-                  label="Confirm Password"
-                  variant="outlined"
-                  size="small"
-                  value={passwordConfirmValue}
-                  onChange={handlePasswordConfirmChange}
-                  type={'password'}
-                />
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Button
-                  sx={{
-                    marginTop: '2vh',
-                  }}
-                  disabled={!(isValid && isPasswordValid)}
-                  type={'submit'}
-                  variant="outlined"
-                  onClick={handleSubmit}
-                >
-                  Créer un compte
-                </Button>
-              </div>
-            </form>
-          </div>
-        </div>
+        <TextField
+          id="outlined-basic"
+          error={!isValid}
+          label="Email"
+          variant="outlined"
+          size="small"
+          type={'email'}
+          style={{ marginBottom: '1em' }}
+          value={emailValue}
+          onChange={handleEmailChange}
+          helperText={isValid ? '' : 'invalid email'}
+        />
+        <TextField
+          id="outlined-basic"
+          label="Username"
+          variant="outlined"
+          size="small"
+          style={{ marginBottom: '1em' }}
+          value={usernameValue}
+          onChange={handleUsernameChange}
+        />
+        <TextField
+          id="outlined-basic"
+          error={!isPasswordValid}
+          label="Password"
+          variant="outlined"
+          size="small"
+          value={passwordValue}
+          onChange={handlePasswordChange}
+          type={'password'}
+        />
+        <TextField
+          sx={{
+            marginTop: '2vh',
+          }}
+          id="outlined-basic"
+          error={!isPasswordValid}
+          label="Confirm Password"
+          variant="outlined"
+          size="small"
+          value={passwordConfirmValue}
+          onChange={handlePasswordConfirmChange}
+          type={'password'}
+        />
+        <Button
+          sx={{
+            marginTop: '2vh',
+          }}
+          disabled={!(isValid && isPasswordValid)}
+          type={'submit'}
+          variant="outlined"
+          onClick={handleSubmit}
+        >
+          Créer un compte
+        </Button>
       </Box>
     </>
   );

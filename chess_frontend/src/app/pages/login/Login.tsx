@@ -52,46 +52,36 @@ function Login() {
         alt="Fantasy chess player"
         src={chess2}
       />
-      <div className="main-wrapper">
-        <div className="login-wrapper">
-          <form className="form-wrapper">
-            <div className="inputs">
-              <TextField
-                id="outlined-basic"
-                label="Username"
-                variant="outlined"
-                size="small"
-                style={{ marginBottom: '1em' }}
-                value={usernameValue}
-                onChange={handleUsernameChange}
-              />
-              <TextField
-                id="outlined-basic"
-                label="Password"
-                variant="outlined"
-                size="small"
-                value={passwordValue}
-                onChange={handlePasswordChange}
-                type={'password'}
-              />
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
-              <Button sx={{ marginTop: '2vh' }} variant="outlined" onClick={handleSubmit}>
-                Se connecter
-              </Button>
-              <i style={{ fontSize: '10px', marginTop: '3vh' }}>
-                Besoin de <a href="/register">créer un compte ?</a>
-              </i>
-            </div>
-          </form>
-        </div>
-      </div>
+      <TextField
+        id="outlined-basic"
+        label="Username"
+        variant="outlined"
+        size="small"
+        style={{ marginBottom: '1em' }}
+        value={usernameValue}
+        onChange={handleUsernameChange}
+      />
+      <TextField
+        id="outlined-basic"
+        label="Password"
+        variant="outlined"
+        size="small"
+        value={passwordValue}
+        onChange={handlePasswordChange}
+        type={'password'}
+      />
+      <Button sx={{ marginTop: '2vh' }} variant="outlined" onClick={handleSubmit}>
+        Se connecter
+      </Button>
+      <Button
+        sx={{
+          marginTop: '2vh',
+        }}
+        variant="outlined"
+        onClick={() => navigate('/register')}
+      >
+        Créer un compte
+      </Button>
     </Box>
   );
 }
