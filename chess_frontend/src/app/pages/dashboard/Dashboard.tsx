@@ -87,91 +87,110 @@ function Dashboard() {
     setNewFriendName(data);
   }
 
+  function disconnectionHandler() {
+    localStorage.clear();
+    navigate('/');
+  }
+
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: '10vh',
-      }}
-    >
+    <Box>
       <Box
         sx={{
-          minWidth: '35vh',
-          minHeight: '55vh',
-          display: 'flex',
-          justifyContent: 'flex-start',
-          alignItems: 'center',
-          flexDirection: 'column',
-          marginTop: '1vh',
-          padding: '3vh',
-          border: 'solid',
-          borderColor: '#2f86d7',
-          borderWidth: '0.2vh',
-          borderRadius: '1vh',
+          margin: '3vh',
         }}
       >
-        <Typography
-          variant="h6"
-          sx={{
-            marginBottom: '4vh',
-          }}
-        >
-          Friends Online
-        </Typography>
-        {cardData}
-        <Box
-          sx={{
-            marginTop: '3vh',
-          }}
-        >
-          <Box>
-            <Typography
-              sx={{
-                marginTop: '4vh',
-              }}
-            >
-              Add friend
-            </Typography>
-            <TextField variant="outlined" onChange={(e) => newFriendNameHandler(e.target.value)} />
-          </Box>
-          <IconButton color="success" onClick={() => addFrindToUser()}>
-            <AddIcon />
-          </IconButton>
-        </Box>
+        <Button variant="outlined" onClick={() => disconnectionHandler()}>
+          Disconnect
+        </Button>
       </Box>
       <Box
-        component="img"
         sx={{
-          width: '35vh',
-          height: '40vh',
-          borderRadius: '1vh',
-          margin: '2vh',
-        }}
-        alt="Fantasy chess player"
-        src={chess2}
-      />
-      <Box
-        sx={{
-          minWidth: '35vh',
-          minHeight: '55vh',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          flexDirection: 'column',
-          marginTop: '1vh',
-          padding: '3vh',
-          border: 'solid',
-          borderColor: '#2f86d7',
-          borderWidth: '0.2vh',
-          borderRadius: '1vh',
+          marginTop: '10vh',
         }}
       >
-        <Box>
-          <Button variant="outlined" onClick={() => navigate('/lobby')}>
-            Join game
-          </Button>
+        <Box
+          sx={{
+            minWidth: '35vh',
+            minHeight: '55vh',
+            display: 'flex',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            flexDirection: 'column',
+            marginTop: '1vh',
+            padding: '3vh',
+            border: 'solid',
+            borderColor: '#2f86d7',
+            borderWidth: '0.2vh',
+            borderRadius: '1vh',
+          }}
+        >
+          <Typography
+            variant="h6"
+            sx={{
+              marginBottom: '4vh',
+            }}
+          >
+            Friends Online
+          </Typography>
+          {cardData}
+          <Box
+            sx={{
+              marginTop: '3vh',
+            }}
+          >
+            <Box>
+              <Typography
+                sx={{
+                  marginTop: '4vh',
+                }}
+              >
+                Add friend
+              </Typography>
+              <TextField
+                variant="outlined"
+                onChange={(e) => newFriendNameHandler(e.target.value)}
+              />
+            </Box>
+            <IconButton color="success" onClick={() => addFrindToUser()}>
+              <AddIcon />
+            </IconButton>
+          </Box>
+        </Box>
+        <Box
+          component="img"
+          sx={{
+            width: '35vh',
+            height: '40vh',
+            borderRadius: '1vh',
+            margin: '2vh',
+          }}
+          alt="Fantasy chess player"
+          src={chess2}
+        />
+        <Box
+          sx={{
+            minWidth: '35vh',
+            minHeight: '55vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+            marginTop: '1vh',
+            padding: '3vh',
+            border: 'solid',
+            borderColor: '#2f86d7',
+            borderWidth: '0.2vh',
+            borderRadius: '1vh',
+          }}
+        >
+          <Box>
+            <Button variant="outlined" onClick={() => navigate('/lobby')}>
+              Join game
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Box>

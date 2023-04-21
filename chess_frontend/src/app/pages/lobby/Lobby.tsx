@@ -91,48 +91,59 @@ function Lobby() {
   }
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: '5vh',
-      }}
-    >
+    <Box>
       <Box
         sx={{
-          minWidth: '45vh',
-          minHeight: '65vh',
-          display: 'flex',
-          justifyContent: 'flex-start',
-          alignItems: 'center',
-          flexDirection: 'column',
-          marginTop: '4vh',
-          padding: '3vh',
-          border: 'solid',
-          borderColor: '#2f86d7',
-          borderWidth: '0.2vh',
-          borderRadius: '1vh',
+          margin: '3vh',
         }}
       >
-        <Typography
-          variant="h6"
-          sx={{
-            marginBottom: '4vh',
-          }}
-        >
-          Available games
-        </Typography>
-        {cardData}
-        <Button
-          sx={{
-            marginTop: '4vh',
-          }}
-          variant="outlined"
-          onClick={() => createNewGame()}
-        >
-          Create new game
+        <Button variant="outlined" onClick={() => navigate('/dashboard')}>
+          Back
         </Button>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: '5vh',
+        }}
+      >
+        <Box
+          sx={{
+            minWidth: '45vh',
+            minHeight: '65vh',
+            display: 'flex',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            flexDirection: 'column',
+            marginTop: '4vh',
+            padding: '3vh',
+            border: 'solid',
+            borderColor: '#2f86d7',
+            borderWidth: '0.2vh',
+            borderRadius: '1vh',
+          }}
+        >
+          <Typography
+            variant="h6"
+            sx={{
+              marginBottom: '4vh',
+            }}
+          >
+            Available games
+          </Typography>
+          {cardData}
+          <Button
+            sx={{
+              marginTop: '4vh',
+            }}
+            variant="outlined"
+            onClick={() => createNewGame()}
+          >
+            Create new game
+          </Button>
+        </Box>
       </Box>
     </Box>
   );
