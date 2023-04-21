@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
 import { getMatches, createNewMatch } from '../../services/match-service';
 import './Lobby.css';
+import axios from 'axios';
 
 interface Player {
   username: string;
@@ -21,10 +22,12 @@ interface Match {
 interface NewMatch {
   players: [
     {
+      id: string;
       username: string;
+      turn: string;
     }
   ];
-  credits: 9000;
+  credits: number;
   ended: false;
   private: false;
 }
@@ -32,6 +35,18 @@ interface NewMatch {
 function Lobby() {
   const navigate = useNavigate();
   const [cardData, setCardData] = useState<Array<JSX.Element>>([]);
+  const token = localStorage.getItem('token');
+  let user_connected: any;
+  // Redirection in no token
+  if (token == null) {
+    window.location.href = '/';
+  }
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  axios.get('http://localhost:3000/user/me', config).then((r: any) => {
+    user_connected = r['data']['message'];
+  });
 
   async function getLobbyData() {
     const availableMatchesArray: Array<JSX.Element> = [];
@@ -77,7 +92,9 @@ function Lobby() {
     const newMatchData: NewMatch = {
       players: [
         {
-          username: 'alexis',
+          id: user_connected['_id'],
+          username: user_connected['username'],
+          turn: 'w',
         },
       ],
       credits: 9000,
@@ -85,9 +102,9 @@ function Lobby() {
       private: false,
     };
 
-    const newGame = await createNewMatch(newMatchData);
-    console.log(newGame);
-    navigate('/game');
+    const newGame: any = await createNewMatch(newMatchData);
+    const id = newGame['result']['message']['insertedId'];
+    navigate('/game', { state: { id: id } });
   }
 
   return (

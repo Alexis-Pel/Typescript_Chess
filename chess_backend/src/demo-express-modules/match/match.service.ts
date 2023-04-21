@@ -6,7 +6,7 @@ import { checkToken } from "../token";
 
 export function createMatch(matchData: IMatch) {
   // do something to register the user
-  void runCreate(matchData).then();
+  return runCreate(matchData).then();
 }
 export function getMatch(matchId: string) {
   return runGetMatch(new ObjectId(matchId));
@@ -54,8 +54,8 @@ async function runCreate(newMatch: IMatch) {
   const collection = db.collection("matchs");
   try {
     // Enregistrer le nouvel utilisateur dans la collection "users"
-    await collection.insertOne(newMatch);
-    return { status: 201, message: "Match créé avec succès" };
+    const match = await collection.insertOne(newMatch);
+    return { status: 201, message: match };
   } catch (e) {
     console.log(e);
     return { status: 500, message: "Match non créé" };

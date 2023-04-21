@@ -20,5 +20,5 @@ router.post('/moves', (req: Request, res: Response) => {
   if (chess.gameOver())
     res.send({ fen: '0' });
   else
-    res.send({ fen: chess.fen() })
+    res.send({ fen: chess.fen(), turn: chess.turn() })
 });

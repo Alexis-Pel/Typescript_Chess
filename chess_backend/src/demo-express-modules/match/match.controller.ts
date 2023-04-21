@@ -8,8 +8,8 @@ import { createMatch, getMatch, getAllMatches } from "./match.service";
 export async function postRegister(req: Request, res: Response) {
   const { body } = req;
   try {
-    await createMatch(body);
-    res.json({ success: true });
+    const result = await createMatch(body);
+    res.json({ result });
   } catch (err) {
     res.status(400).json({ error: "cannot create user" });
   }
@@ -17,7 +17,8 @@ export async function postRegister(req: Request, res: Response) {
 
 export async function getMatchById(req: Request, res: Response) {
   try {
-    return await getMatch(req.params.toDoId);
+    const response =  await getMatch(req.params.matchId);
+    res.status(response['status']).json(response['message'])
   } catch (err) {
     res.status(400).json({ error: "cannot create user" });
   }
