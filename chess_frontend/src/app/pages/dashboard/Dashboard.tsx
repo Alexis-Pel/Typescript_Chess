@@ -79,6 +79,7 @@ function Dashboard() {
         token: userJWTToken,
       };
       await addFriendToUser(newFriendData);
+      getFriendData();
     }
   }
 
