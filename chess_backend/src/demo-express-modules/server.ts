@@ -64,9 +64,23 @@ export function initServer() {
 
 function websocket(io: any){
   io.on('connection', (socket: any) => {
+    let room = '';
+
+
     socket.on('message', (data: any) => {
       console.log(`${data['username']}: ${data['message']}`);
       io.emit('message', `${data['username']}: ${data['message']}`);
+    });
+
+    socket.on('move', (data: any) => {
+      io.to(room).emit('move', data['fen']);
+      //console.log('Move', data);
+    });
+
+    // Ecouter un événement particulier
+    socket.on('joinRoom', (data: any) => {
+      room = data;
+      socket.join(data);
     });
 
     socket.on('disconnect', () => {

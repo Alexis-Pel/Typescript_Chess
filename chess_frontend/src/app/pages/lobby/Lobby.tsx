@@ -44,7 +44,7 @@ function Lobby() {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-  axios.get('http://localhost:3000/user/me', config).then((r: any) => {
+  axios.get('http://10.160.33.161:3000/user/me', config).then((r: any) => {
     user_connected = r['data']['message'];
   });
 
@@ -104,7 +104,7 @@ function Lobby() {
 
     const newGame: any = await createNewMatch(newMatchData);
     const id = newGame['result']['message']['insertedId'];
-    navigate('/game', { state: { id: id } });
+    navigate(`/game?id=${id}`, { state: { id: id } });
   }
 
   return (

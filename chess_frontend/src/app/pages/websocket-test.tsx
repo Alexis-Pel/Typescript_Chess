@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { TextField } from '@mui/material';
 import axios from 'axios';
 
-const socket = io('http://localhost:3000');
+const socket = io('http://10.160.33.161:3000');
 
 function Websocket() {
   const [chatValue, setchatValue] = useState('');
@@ -20,7 +20,7 @@ function Websocket() {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    axios.get('http://localhost:3000/user/me', config).then((r: any) => {
+    axios.get('http://10.160.33.161:3000/user/me', config).then((r: any) => {
       setUserValue(r['data']['message']);
     });
   }

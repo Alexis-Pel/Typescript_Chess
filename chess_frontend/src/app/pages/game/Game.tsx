@@ -1,25 +1,34 @@
 import './Game.css';
 import { Chessboard } from 'react-chessboard';
 import { useState } from 'react';
-import { Square, Piece, BoardOrientation } from 'react-chessboard/dist/chessboard/types';
+import { BoardOrientation, Piece, Square } from 'react-chessboard/dist/chessboard/types';
 import axios from 'axios';
 import Websocket from '../websocket-test';
 import { useLocation } from 'react-router';
+import io from 'socket.io-client';
+
+const socket = io('http://10.160.33.161:3000');
+// Avoid message repetition
 
 function Game() {
   const [game, setGame] = useState();
   const [turn, setTurn] = useState('w');
-  const { state } = useLocation();
+  //const { state } = useLocation();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const state = searchParams.get('id');
+
   let turnIAm: BoardOrientation = 'white';
   let match: any;
-  let gameId: string;
+  let gameId: any;
 
   if (match == undefined) {
     try {
-      gameId = state['id'];
+      gameId = state;
       getGame().then((value) => {
         match = value.data;
         turnIAm = match['players'].length == 1 ? 'white' : 'black';
+        socket.emit('joinRoom', gameId);
       });
     } catch (e) {
       console.log(e);
@@ -30,16 +39,14 @@ function Game() {
       );
     }
   }
-
   async function getGame() {
-    const result = await axios.get('http://localhost:3000/match/' + gameId);
-    return result;
+    return await axios.get('http://10.160.33.161:3000/match/' + gameId);
   }
 
   if (game == undefined) {
     const handleSubmit = async () => {
       try {
-        const response = await axios.post('http://localhost:3000/game/games');
+        const response = await axios.post('http://10.160.33.161:3000/game/games');
         return response.data.fen;
       } catch (error) {
         console.error(error);
@@ -57,7 +64,8 @@ function Game() {
           move: { from: sourceSquare, to: targetSquare, piece: piece },
         };
         try {
-          const response = await axios.post('http://localhost:3000/game/moves', object);
+          const response = await axios.post('http://10.160.33.161:3000/game/moves', object);
+          socket.emit('move', response.data);
           return response.data;
         } catch (error) {
           console.error(error);
@@ -72,6 +80,13 @@ function Game() {
     return false;
   }
 
+  // Avoid message repetition
+  socket.on('move', (data: any) => {
+    if (game != data) {
+      setGame(data);
+    }
+  });
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', alignItems: 'center' }}>
       <h1>{turn}</h1>
@@ -84,7 +99,6 @@ function Game() {
         customDarkSquareStyle={{ backgroundColor: '#779952' }}
         customLightSquareStyle={{ backgroundColor: '#edeed1' }}
       />
-      <Websocket />
     </div>
   );
 }

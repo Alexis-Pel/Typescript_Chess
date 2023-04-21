@@ -17,7 +17,7 @@ interface Match {
 export async function getMatches() {
   let toReturn: Array<Match> = [];
   await axios
-    .get('http://localhost:3000/match')
+    .get('http://10.160.33.161:3000/match')
     .then((response) => {
       toReturn = response.data.matches.matches;
     })
@@ -33,7 +33,7 @@ export async function createNewMatch(data: object) {
 
   let toReturn = {};
   await axios
-    .post('http://localhost:3000/match', data, {
+    .post('http://10.160.33.161:3000/match', data, {
       headers: {
         'Content-Type': 'application/json',
       },
