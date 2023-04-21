@@ -17,8 +17,9 @@ function Game() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const state = searchParams.get('id');
+  const userId = searchParams.get('userId');
 
-  let turnIAm: BoardOrientation = 'white';
+  let turnIAm: BoardOrientation = 'black';
   let match: any;
   let gameId: any;
 
@@ -27,7 +28,11 @@ function Game() {
       gameId = state;
       getGame().then((value) => {
         match = value.data;
-        turnIAm = match['players'].length == 1 ? 'white' : 'black';
+        match.players.forEach((element: any) => {
+          if (element.id == userId) {
+            turnIAm = element.turn;
+          }
+        });
         socket.emit('joinRoom', gameId);
       });
     } catch (e) {

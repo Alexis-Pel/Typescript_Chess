@@ -104,7 +104,7 @@ function Lobby() {
 
     const newGame: any = await createNewMatch(newMatchData);
     const id = newGame['result']['message']['insertedId'];
-    navigate(`/game?id=${id}`, { state: { id: id } });
+    navigate(`/game?id=${id}&userId=${user_connected['_id']}`, { state: { id: id } });
   }
 
   return (
