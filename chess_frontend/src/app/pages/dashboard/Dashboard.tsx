@@ -7,6 +7,8 @@ import AddIcon from '@mui/icons-material/Add';
 import { Typography } from '@mui/material';
 import { getFriends } from '../../services/friend-service';
 import chess2 from '../../assets/chess2.png';
+import { addFriendToUser } from '../../services/friend-service';
+import jwt from 'jwt-decode';
 import './Dashboard.css';
 
 interface Friend {
@@ -17,6 +19,10 @@ interface Friend {
 function Dashboard() {
   const navigate = useNavigate();
   const [cardData, setCardData] = useState<Array<JSX.Element>>([]);
+
+  async function joinFriendGame() {
+    // Join friend's game
+  }
 
   async function getFriendData() {
     const friendListCardArray: Array<JSX.Element> = [];
@@ -43,7 +49,7 @@ function Dashboard() {
           >
             {friend.userName}
           </Typography>
-          <Button variant="outlined" onClick={() => navigate('/game')}>
+          <Button variant="outlined" onClick={() => joinFriendGame()}>
             Invite
           </Button>
         </Box>
@@ -56,6 +62,14 @@ function Dashboard() {
   useEffect(() => {
     getFriendData();
   }, []);
+
+  async function addFrindToUser() {
+    const userJWTToken: string | null = localStorage.getItem('token');
+    if (userJWTToken != null) {
+      const user: string = jwt(userJWTToken);
+      const apiCall = await addFriendToUser(user);
+    }
+  }
 
   return (
     <Box
@@ -96,7 +110,11 @@ function Dashboard() {
             marginTop: '3vh',
           }}
         >
-          <IconButton color="success" aria-label="add to shopping cart">
+          <IconButton
+            color="success"
+            aria-label="add to shopping cart"
+            onClick={() => addFrindToUser()}
+          >
             <AddIcon />
           </IconButton>
         </Box>

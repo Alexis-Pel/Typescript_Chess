@@ -24,6 +24,5 @@ async function runLogin(data: object) {
     .catch((error) => {
       toReturn = false;
     });
-  console.clear();
   return toReturn;
 }

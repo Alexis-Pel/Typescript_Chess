@@ -7,17 +7,22 @@ import { router as gameRouter } from './chess/chess'
 // @ts-ignore
 //import { checkToken } from "./token";
 
-
 export function initServer() {
-  const app = express()
-  app.use(express.json())
+  const app = express();
+  app.use(express.json());
 
   /* Middleware, console.log each request */
   app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-/*    const bearer = req.header('Authorization')
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET, POST, OPTIONS, PUT, DELETE"
+    );
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization"
+    );
+    /*    const bearer = req.header('Authorization')
     // @ts-ignore
     if(req.path != '/user/login' && req.path != '/user/register' && req.path != '/'){
       if(bearer == undefined){
@@ -29,9 +34,9 @@ export function initServer() {
         }
       }
     }*/
-    console.log(req.method, req.path, +new Date())
-    next()
-  })
+    console.log(req.method, req.path, +new Date());
+    next();
+  });
 
   // app.use('/blog', routerBlog)
   app.use('/user', userRouter)
@@ -43,7 +48,7 @@ export function initServer() {
   const io = new Server(server, {
     cors: {
       origin: "*",
-    }
+    },
   });
 
   server.listen(process.env.port || 3000, () => {
@@ -54,7 +59,7 @@ export function initServer() {
   //  console.log('Listening on http://localhost:8080')
   //})
   websocket(io);
-  return app
+  return app;
 }
 
 function websocket(io: any){

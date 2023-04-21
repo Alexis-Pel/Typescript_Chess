@@ -1,32 +1,39 @@
-import type { Request, Response } from 'express'
-import { login, register, getMeService } from './user.service'
+import type { Request, Response } from "express";
+import { login, register, getMeService, addFriendToUser } from "./user.service";
 // @ts-ignore
-import {checkToken} from "../token";
+import { checkToken } from "../token";
 
 export async function getMe(req: Request, res: Response) {
-  const token = req.header('Authorization')
-  const response = await getMeService(token)
-  console.log(response)
-  res.status(response['status']).json(response)
+  const token = req.header("Authorization");
+  const response = await getMeService(token);
+  console.log(response);
+  res.status(response["status"]).json(response);
 }
 
 export async function postRegister(req: Request, res: Response) {
-  const { body } = req
+  const { body } = req;
 
   try {
-    await register(body)
-    res.json({ success: true })
-  }
-  catch (err) {
-    res.status(400).json({ error: 'cannot create user' })
+    await register(body);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(400).json({ error: "cannot create user" });
   }
 }
 
 export async function postLogin(req: Request, res: Response) {
-  const { body } = req
+  const { body } = req;
 
-  const response = await login(body)
+  const response = await login(body);
   // do something with token ?
   // @ts-expect-error
-  res.status(response.status).json(response)
+  res.status(response.status).json(response);
+}
+
+export async function addFriend(req: Request, res: Response) {
+  const { body } = req;
+
+  const response = await addFriendToUser(body);
+  // do something with token ?
+  res.status(response.status).json(response);
 }
