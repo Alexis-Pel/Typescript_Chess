@@ -8,6 +8,7 @@ interface Player {
   playerCredit: number;
 }
 interface Match {
+  _id: string;
   players: Array<Player>;
   ended: boolean;
   matchCredit: number;

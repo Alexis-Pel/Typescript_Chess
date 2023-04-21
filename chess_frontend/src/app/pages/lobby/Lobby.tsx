@@ -14,6 +14,7 @@ interface Player {
   playerCredit: number;
 }
 interface Match {
+  _id: string;
   players: Array<Player>;
   ended: boolean;
   matchCredit: number;
@@ -74,7 +75,7 @@ function Lobby() {
           >
             {match.players[0].username}
           </Typography>
-          <Button variant="outlined" onClick={() => navigate('/game')}>
+          <Button variant="outlined" onClick={() => joinGame(match._id)}>
             Join
           </Button>
         </Box>
@@ -88,6 +89,9 @@ function Lobby() {
     getLobbyData();
   }, []);
 
+  function joinGame(matchId: string) {
+    navigate(`/game?id=${matchId}&userId=${user_connected['_id']}`);
+  }
   async function createNewGame() {
     const newMatchData: NewMatch = {
       players: [

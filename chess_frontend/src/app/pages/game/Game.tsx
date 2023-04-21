@@ -111,6 +111,7 @@ function Game() {
         customDarkSquareStyle={{ backgroundColor: '#779952' }}
         customLightSquareStyle={{ backgroundColor: '#edeed1' }}
       />
+      <Websocket />
     </div>
   );
 }
