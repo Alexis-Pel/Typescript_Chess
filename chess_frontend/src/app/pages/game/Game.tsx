@@ -84,6 +84,11 @@ function Game() {
   socket.on('move', (data: any) => {
     if (game != data) {
       setGame(data);
+      if (turn == 'w') {
+        setTurn('b');
+      } else {
+        setTurn('w');
+      }
     }
   });
 
