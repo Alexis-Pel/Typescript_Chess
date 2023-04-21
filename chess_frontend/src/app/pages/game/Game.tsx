@@ -65,7 +65,9 @@ function Game() {
         };
         try {
           const response = await axios.post('http://10.160.33.161:3000/game/moves', object);
-          socket.emit('move', response.data);
+          if (response.data != game) {
+            socket.emit('move', response.data);
+          }
           return response.data;
         } catch (error) {
           console.error(error);
