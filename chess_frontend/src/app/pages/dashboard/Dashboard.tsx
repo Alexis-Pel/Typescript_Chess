@@ -6,30 +6,38 @@ import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import { Typography } from '@mui/material';
 import { getFriends } from '../../services/friend-service';
-import chess2 from '../../assets/chess2.png';
+import chess1 from '../../assets/chess1.png';
 import { addFriendToUser } from '../../services/friend-service';
-import jwt from 'jwt-decode';
+import TextField from '@mui/material/TextField';
 import './Dashboard.css';
 
 interface Friend {
-  userName: string;
+  username: string;
   credit: number;
 }
 
 function Dashboard() {
   const navigate = useNavigate();
   const [cardData, setCardData] = useState<Array<JSX.Element>>([]);
+  const [newFriendName, setNewFriendName] = useState<string>('');
 
-  async function joinFriendGame() {
-    // Join friend's game
+  async function joinFriendGame(friendName: string) {
+    // Create match with friend username
+    console.log(friendName);
   }
 
   async function getFriendData() {
     const friendListCardArray: Array<JSX.Element> = [];
     let friendListData: Array<Friend> = [];
+    const userJWTToken: string | null = localStorage.getItem('token');
 
-    const fakeApiResponse = await getFriends();
-    friendListData = fakeApiResponse;
+    if (userJWTToken != null) {
+      const currentUserToken: object = {
+        token: userJWTToken,
+      };
+
+      friendListData = await getFriends(currentUserToken);
+    }
 
     friendListData.forEach((friend, i) => {
       friendListCardArray.push(
@@ -47,9 +55,9 @@ function Dashboard() {
               margin: '1vh',
             }}
           >
-            {friend.userName}
+            {friend.username}
           </Typography>
-          <Button variant="outlined" onClick={() => joinFriendGame()}>
+          <Button variant="outlined" onClick={() => joinFriendGame(friend.username)}>
             Invite
           </Button>
         </Box>
@@ -65,91 +73,131 @@ function Dashboard() {
 
   async function addFrindToUser() {
     const userJWTToken: string | null = localStorage.getItem('token');
+
     if (userJWTToken != null) {
-      const user: string = jwt(userJWTToken);
-      const apiCall = await addFriendToUser(user);
+      const newFriendData: object = {
+        newFriend: newFriendName,
+        token: userJWTToken,
+      };
+      await addFriendToUser(newFriendData);
+      getFriendData();
     }
   }
 
+  function newFriendNameHandler(data: string) {
+    setNewFriendName(data);
+  }
+
+  function disconnectionHandler() {
+    localStorage.clear();
+    navigate('/');
+  }
+
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: '10vh',
-      }}
-    >
+    <Box>
       <Box
         sx={{
-          minWidth: '35vh',
-          minHeight: '55vh',
-          display: 'flex',
-          justifyContent: 'flex-start',
-          alignItems: 'center',
-          flexDirection: 'column',
-          marginTop: '1vh',
-          padding: '3vh',
-          border: 'solid',
-          borderColor: '#2f86d7',
-          borderWidth: '0.2vh',
-          borderRadius: '1vh',
+          margin: '3vh',
         }}
       >
-        <Typography
-          variant="h6"
-          sx={{
-            marginBottom: '4vh',
-          }}
-        >
-          Friends Online
-        </Typography>
-        {cardData}
-        <Box
-          sx={{
-            marginTop: '3vh',
-          }}
-        >
-          <IconButton
-            color="success"
-            aria-label="add to shopping cart"
-            onClick={() => addFrindToUser()}
-          >
-            <AddIcon />
-          </IconButton>
-        </Box>
+        <Button variant="outlined" onClick={() => disconnectionHandler()}>
+          Disconnect
+        </Button>
       </Box>
       <Box
-        component="img"
         sx={{
-          width: '35vh',
-          height: '40vh',
-          borderRadius: '1vh',
-          margin: '2vh',
-        }}
-        alt="Fantasy chess player"
-        src={chess2}
-      />
-      <Box
-        sx={{
-          minWidth: '35vh',
-          minHeight: '55vh',
           display: 'flex',
-          justifyContent: 'center',
+          justifyContent: 'space-around',
           alignItems: 'center',
-          flexDirection: 'column',
-          marginTop: '1vh',
-          padding: '3vh',
-          border: 'solid',
-          borderColor: '#2f86d7',
-          borderWidth: '0.2vh',
-          borderRadius: '1vh',
+          marginTop: '10vh',
         }}
       >
-        <Box>
-          <Button variant="outlined" onClick={() => navigate('/lobby')}>
-            Join game
-          </Button>
+        <Box
+          sx={{
+            minWidth: '35vh',
+            minHeight: '55vh',
+            display: 'flex',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            flexDirection: 'column',
+            marginTop: '1vh',
+            marginBottom: '5vh',
+            padding: '3vh',
+            border: 'solid',
+            borderColor: '#2f86d7',
+            borderWidth: '0.2vh',
+            borderRadius: '1vh',
+          }}
+        >
+          <Typography
+            variant="h6"
+            sx={{
+              marginBottom: '4vh',
+            }}
+          >
+            Friends Online
+          </Typography>
+          {cardData}
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              flexDirection: 'column',
+              marginTop: '5vh',
+            }}
+          >
+            <Typography
+              sx={{
+                marginTop: '4vh',
+              }}
+            >
+              Add friend
+            </Typography>
+            <TextField
+              sx={{
+                marginTop: '1vh',
+              }}
+              variant="outlined"
+              onChange={(e) => newFriendNameHandler(e.target.value)}
+            />
+            <IconButton color="success" onClick={() => addFrindToUser()}>
+              <AddIcon />
+            </IconButton>
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            minWidth: '35vh',
+            minHeight: '55vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+            marginTop: '1vh',
+            padding: '3vh',
+            border: 'solid',
+            borderColor: '#2f86d7',
+            borderWidth: '0.2vh',
+            borderRadius: '1vh',
+          }}
+        >
+          <Box
+            component="img"
+            sx={{
+              width: '25vh',
+              height: '30vh',
+              borderRadius: '1vh',
+              margin: '2vh',
+            }}
+            alt="Fantasy chess player"
+            src={chess1}
+          />
+          <Box>
+            <Button variant="outlined" onClick={() => navigate('/lobby')}>
+              Join game
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Box>

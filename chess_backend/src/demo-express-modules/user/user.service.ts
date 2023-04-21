@@ -1,4 +1,4 @@
-import { sign } from "jsonwebtoken";
+import { JwtPayload, sign } from "jsonwebtoken";
 import { db } from "../db";
 import type {
   IUserLoginBody,
@@ -8,10 +8,22 @@ import type {
 // @ts-ignore
 import { checkToken } from "../token";
 import { Condition, ObjectId } from "mongodb";
+const jwt = require("jsonwebtoken");
 
-interface NewFriend {
-  id: Condition<ObjectId> | undefined;
+interface UserWithFriends {
+  friends: Array<string>;
   username: string;
+  email: string;
+  password: string;
+}
+
+interface NewFriendData {
+  newFriend: string;
+  token: string;
+}
+
+interface UserToken {
+  token: string;
 }
 
 export async function login(userData: IUserLoginBody) {
@@ -36,7 +48,14 @@ export async function getMeService(token: string | undefined){
 }
 export function register(userData: IUserRegisterBody) {
   // do something to register the user
-  void runRegister(userData).then();
+  const newUser: UserWithFriends = {
+    friends: [],
+    username: userData.username,
+    email: userData.email,
+    password: userData.password,
+  };
+
+  void runRegister(newUser).then();
 }
 
 async function runLogin(userData: IUserLoginBody): Promise<object> {
@@ -79,16 +98,18 @@ async function runRegister(newUser: IUserRegisterBody) {
   }
 }
 
-export async function addFriendToUser(newFriendData: NewFriend) {
+export async function addFriendToUser(newFriendData: NewFriendData) {
   const collection = db.collection("users");
-  try {
-    // Enregistrer le nouvel utilisateur dans la collection "users"
-    const lol = await collection.updateOne(
-      { _id: newFriendData.id },
-      { $set: { username: newFriendData.username } }
-    );
+  const currentUserIdFromToken: JwtPayload = jwt.verify(
+    newFriendData.token,
+    process.env.SECRET
+  );
 
-    console.log(lol);
+  try {
+    const response = await collection.updateOne(
+      { _id: new ObjectId(currentUserIdFromToken.id) },
+      { $push: { friends: { username: newFriendData.newFriend } } }
+    );
 
     return { status: 201, message: "Ami ajouté avec succès" };
   } catch (e) {
@@ -97,5 +118,25 @@ export async function addFriendToUser(newFriendData: NewFriend) {
       status: 500,
       message: "Friends non mis à jour",
     };
+  }
+}
+
+export async function getUserFriends(userToken: UserToken) {
+  const collection = db.collection("users");
+
+  const currentUserFromToken: JwtPayload = jwt.verify(
+    userToken.token,
+    process.env.SECRET
+  );
+
+  try {
+    const user = await collection.findOne({
+      _id: new ObjectId(currentUserFromToken.id),
+    });
+
+    return { status: 201, userFriends: user!.friends };
+  } catch (e) {
+    console.log(e);
+    return { status: 500, message: "Matches non trouvés" };
   }
 }

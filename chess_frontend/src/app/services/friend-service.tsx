@@ -2,34 +2,34 @@
 import axios from 'axios';
 
 interface Friend {
-  userName: string;
+  username: string;
   credit: number;
 }
 
-export async function getFriends() {
-  const testFriendData: Array<Friend> = [
-    {
-      userName: 'Tristan',
-      credit: 400,
-    },
-    {
-      userName: 'Angel',
-      credit: 400,
-    },
-    {
-      userName: 'Alexis',
-      credit: 400,
-    },
-  ];
+export async function getFriends(userToken: object) {
+  let friendResponseArray: Array<Friend> = [];
 
-  //   return runCreateMatch(data);
-  return testFriendData;
+  await axios
+    .post('http://localhost:3000/user/friend/getall', userToken, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((response) => {
+      friendResponseArray = response.data.friends.userFriends;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  return friendResponseArray;
 }
 
-export async function addFriendToUser(userId: string) {
+export async function addFriendToUser(userToken: object) {
   let toReturn = {};
+
   await axios
-    .post('http://localhost:8080/match/create', userId, {
+    .post('http://localhost:3000/user/friend', userToken, {
       headers: {
         'Content-Type': 'application/json',
       },
